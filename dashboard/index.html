@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark">◉</div>
+    <div>
+      <h1>Token Launch Radar</h1>
+      <p class="sub">Pre-token protocols ranked by what their launch would be worth — and how to farm each one.</p>
+    </div>
+  </div>
+  <div id="stats" class="stats"></div>
+</header>
+
+<section class="method">
+  <h2>How the value is derived — model <span id="modelVersion"></span></h2>
+  <p>Every protocol that already trades prices its category: we take the <strong>median market-cap / TVL multiple</strong> of the token-bearing peers in the snapshot, then price each pre-token protocol's TVL at its own category's multiple. Three snapshot-native adjustments follow: <strong>7-day growth</strong> (clamped ±30%, weight 0.8), <strong>tokenless age</strong> (up to +25% over three years) and <strong>chain breadth</strong> (+1% per extra chain, up to eight). Wrapped, staked and bridged products of traded tokens are excluded, never ranked. No name is special-cased: <em>impliedValue()</em> in the model scores every row with the same arithmetic the board carries, and the detail view shows each factor for the row you open.</p>
+  <p class="fineprint" id="universeNote"></p>
+</section>
+
+<section class="controls">
+  <input id="q" type="search" placeholder="Search name or slug…" aria-label="Search">
+  <select id="cat" aria-label="Category"><option value="all">All categories</option></select>
+  <select id="chain" aria-label="Chain"><option value="all">All chains</option></select>
+  <label class="chk"><input id="watchOnly" type="checkbox"> Watchlist only (≥ $50M TVL)</label>
+  <label class="chk"><input id="hotOnly" type="checkbox"> Growing (+5% / 7d)</label>
+  <span id="count" class="count"></span>
+</section>
+
+<main>
+  <table id="board">
+    <thead><tr>
+      <th data-sort="rank">#</th><th data-sort="name">Protocol</th><th data-sort="category">Category</th>
+      <th data-sort="tvl" class="num">TVL</th><th data-sort="change" class="num">7d %</th>
+      <th data-sort="multiple" class="num">Comp ×</th><th data-sort="implied" class="num">Implied value</th>
+      <th data-sort="age" class="num">Age</th><th>Farm effort</th>
+    </tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p id="empty" class="empty" hidden>No protocol matches this filter. Loosen the search or clear a filter.</p>
+</main>
+
+<aside id="detail" class="detail" hidden></aside>
+<footer>Snapshot: DefiLlama protocols, sealed at fetch time. “Records no token” is DefiLlama's record, not proof a token does not exist. Implied value is this radar's own model claim, not a prediction that a token will launch.</footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
